@@ -8,7 +8,11 @@ import java.awt.event.ActionListener;
  * Created by johncarlo on 7/11/2016.
  */
 public class TestMakerPanel1 extends JPanel implements TestMakerView{
-    private JRadioButton answer1;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JRadioButton answer1;
     private JRadioButton answer2;
     private JRadioButton answer3;
     private JRadioButton answer4;
@@ -20,10 +24,10 @@ public class TestMakerPanel1 extends JPanel implements TestMakerView{
     private JButton check;
     public TestMakerPanel1(){
         //Initialize all variables
-        answer1 = new JRadioButton("Siuuu",false);
-        answer2 = new JRadioButton("Aro Picha",false);
-        answer3 = new JRadioButton("Ni de coña",false);
-        answer4 = new JRadioButton("Si ooooo No",false);
+        answer1 = new JRadioButton("Question",false);
+        answer2 = new JRadioButton("Answer1",false);
+        answer3 = new JRadioButton("Answer2",false);
+        answer4 = new JRadioButton("Answer3",false);
         for(int i=1; i<5; i++){
             changeColor(i,Color.white);
         }
