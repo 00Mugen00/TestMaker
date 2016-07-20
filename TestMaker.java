@@ -61,4 +61,11 @@ public class TestMaker {
 		return questionsAnswers.getString("Answer4");
 	}
 	
+	public int getRealAnswer() throws SQLException{
+		if(!hasNext){
+			throw new RuntimeException("ERROR. No more answer4");
+		}
+		return questionsAnswers.getInt("RealAnswer");
+	}
+	
 }

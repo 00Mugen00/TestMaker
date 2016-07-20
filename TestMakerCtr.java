@@ -10,9 +10,11 @@ import java.sql.SQLException;
 public class TestMakerCtr implements ActionListener{
     private TestMakerView testMakerView;
     private TestMaker testMaker;
+    private int correctAnswer;
     public TestMakerCtr(TestMakerView testMakerView,TestMaker testMaker){
         this.testMakerView= testMakerView;
         this.testMaker=testMaker;
+        this.correctAnswer=0;
     }
 
     @Override
@@ -23,11 +25,14 @@ public class TestMakerCtr implements ActionListener{
             	boolean hasNext=testMaker.nextQuestionAnswers();
             	if(hasNext){
             		try {
+            			correctAnswer=testMaker.getRealAnswer();
+            			testMakerView.check(testMaker.getRealAnswer());
 						testMakerView.changeQuestion(testMaker.nextQuestion(), testMaker.nextAnswer1(), testMaker.nextAnswer2(), testMaker.nextAnswer3(), testMaker.nextAnswer4());
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
             	}else{
+            		correctAnswer=0;
             		testMakerView.changeQuestion("Question","Answer1","Answer2","Answer3","Answer4");
             		System.out.println("No more tests");
             	}
@@ -35,7 +40,7 @@ public class TestMakerCtr implements ActionListener{
             case "PREVIOUS":
                 break;
             case "CHECK":
-                testMakerView.check(1);
+                testMakerView.check(correctAnswer);
                 break;
             default:
                 break;
