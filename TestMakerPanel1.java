@@ -17,17 +17,26 @@ public class TestMakerPanel1 extends JPanel implements TestMakerView{
     private JRadioButton answer3;
     private JRadioButton answer4;
     private ButtonGroup radioButtons;
-    private JTextField question;
+    private JTextArea question;
     private JLabel message;
     private JButton previous;
     private JButton next;
     private JButton check;
+    
+    private JMenuBar menuBar;
+    private JMenu file,help;
+    //File:
+    private JMenuItem createTest,openTest,saveTest,closeTest;
+    //Help:
+    private JMenuItem howToUseTestMaker,aboutTestMaker;
+    
+    
     public TestMakerPanel1(){
         //Initialize all variables
-        answer1 = new JRadioButton("Question",false);
-        answer2 = new JRadioButton("Answer1",false);
-        answer3 = new JRadioButton("Answer2",false);
-        answer4 = new JRadioButton("Answer3",false);
+        answer1 = new JRadioButton("Answer1",false);
+        answer2 = new JRadioButton("Answer2",false);
+        answer3 = new JRadioButton("Answer3",false);
+        answer4 = new JRadioButton("Answer4",false);
         for(int i=1; i<5; i++){
             changeColor(i,Color.white);
         }
@@ -36,18 +45,40 @@ public class TestMakerPanel1 extends JPanel implements TestMakerView{
         radioButtons.add(answer2);
         radioButtons.add(answer3);
         radioButtons.add(answer4);
-        question = new JTextField("Llegaremos al final?");
+        question = new JTextArea("Question");
         question.setEditable(false);
+        question.setLineWrap(true);
         previous = new JButton("PREVIOUS");
         check = new JButton("CHECK");
         next = new JButton("NEXT");
-        message=new JLabel("Test In Progress");
+        message=new JLabel("Test in Progress");
+        
+        menuBar = new JMenuBar();
+        file = new JMenu("File");
+        help = new JMenu("Help");
+        createTest = new JMenuItem("Create Test");
+        openTest = new JMenuItem("Open Test");
+        saveTest = new JMenuItem("Save Test");
+        closeTest = new JMenuItem("Close Test");
+        howToUseTestMaker = new JMenuItem("How to use Test Maker");
+        aboutTestMaker = new JMenuItem("About Test Maker");
+        
+        file.add(createTest);
+        file.add(openTest);
+        file.add(saveTest);
+        file.add(closeTest);
+        help.add(howToUseTestMaker);
+        help.add(aboutTestMaker);
+        
+        menuBar.add(file);
+        menuBar.add(help);
+        
         //Set layout of the GUI
         setLayout(new BorderLayout());
 
         JPanel northPanel = new JPanel();
         northPanel.setLayout(new GridLayout(2,1));
-        northPanel.add(new JLabel("Question"));
+        northPanel.add(menuBar);
         northPanel.add(question);
 
         JPanel centerPanel = new JPanel();
@@ -120,9 +151,11 @@ public class TestMakerPanel1 extends JPanel implements TestMakerView{
         try{
             if(correctAnswer==getAnswer()){
                 changeColor(correctAnswer,Color.green);
+                setMessage("Correct Answer");
             }else{
                 changeColor(correctAnswer,Color.green);
                 changeColor(getAnswer(),Color.red);
+                setMessage("Incorrect Answer");
             }
             enableButtons(false);
         }catch(NullPointerException e){
@@ -164,5 +197,9 @@ public class TestMakerPanel1 extends JPanel implements TestMakerView{
         for(int i=1; i<5; i++){
             changeColor(i,Color.white);
         }
+    }
+    
+    public void setMessage(String message){
+    	this.message.setText(message);
     }
 }

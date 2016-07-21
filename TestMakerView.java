@@ -22,4 +22,5 @@ public interface TestMakerView {
     void controller(ActionListener ctr);
     void enableButtons(Boolean state);
     void changeQuestion(String question,String answer1,String answer2,String answer3,String answer4);
+    void setMessage(String message);
 }

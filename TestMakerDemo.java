@@ -5,6 +5,8 @@ import TestMakerGUI.TestMakerCtr;
 import TestMakerGUI.TestMakerPanel1;
 import TestMakerGUI.TestMakerView;
 
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -21,6 +23,7 @@ public class TestMakerDemo {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setContentPane((JPanel) testMakerView);
         window.pack();
+        window.setMinimumSize(new Dimension(300,300));
         window.setVisible(true);
     }
 }

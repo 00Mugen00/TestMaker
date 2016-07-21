@@ -15,29 +15,29 @@ public class TestMakerCtr implements ActionListener{
         this.testMakerView= testMakerView;
         this.testMaker=testMaker;
         this.correctAnswer=0;
+        boolean hasNext=testMaker.nextQuestionAnswers();
+        if(hasNext){
+    		try {
+    			correctAnswer=testMaker.getCorrectAnswer();
+				testMakerView.changeQuestion(testMaker.getQuestion(), testMaker.getAnswer1(), testMaker.getAnswer2(), testMaker.getAnswer3(), testMaker.getAnswer4());
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+    	}else{
+    		correctAnswer=0;
+    		testMakerView.changeQuestion("Question","Answer1","Answer2","Answer3","Answer4");
+    		System.out.println("No more tests");
+    	}
     }
-
-    @Override
+    
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
         switch(command){
             case "NEXT":
-            	boolean hasNext=testMaker.nextQuestionAnswers();
-            	if(hasNext){
-            		try {
-            			correctAnswer=testMaker.getRealAnswer();
-            			testMakerView.check(testMaker.getRealAnswer());
-						testMakerView.changeQuestion(testMaker.nextQuestion(), testMaker.nextAnswer1(), testMaker.nextAnswer2(), testMaker.nextAnswer3(), testMaker.nextAnswer4());
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-            	}else{
-            		correctAnswer=0;
-            		testMakerView.changeQuestion("Question","Answer1","Answer2","Answer3","Answer4");
-            		System.out.println("No more tests");
-            	}
+            	nextQuestion();
                 break;
             case "PREVIOUS":
+            	previousQuestion();
                 break;
             case "CHECK":
                 testMakerView.check(correctAnswer);
@@ -45,5 +45,31 @@ public class TestMakerCtr implements ActionListener{
             default:
                 break;
         }
+    }
+    
+    private void nextQuestion(){
+    	testMakerView.setMessage("Test in Progress");
+    	boolean hasNext=testMaker.nextQuestionAnswers();
+    	if(hasNext){
+    		try {
+    			correctAnswer=testMaker.getCorrectAnswer();
+				testMakerView.changeQuestion(testMaker.getQuestion(), testMaker.getAnswer1(), testMaker.getAnswer2(), testMaker.getAnswer3(), testMaker.getAnswer4());
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+    	}
+    }
+    
+    private void previousQuestion(){
+    	testMakerView.setMessage("Test in Progress");
+    	boolean hasPrevious=testMaker.previousQuestionAnswers();
+    	if(hasPrevious){
+    		try {
+    			correctAnswer=testMaker.getCorrectAnswer();
+				testMakerView.changeQuestion(testMaker.getQuestion(), testMaker.getAnswer1(), testMaker.getAnswer2(), testMaker.getAnswer3(), testMaker.getAnswer4());
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+    	}
     }
 }

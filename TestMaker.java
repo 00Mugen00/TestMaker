@@ -9,63 +9,80 @@ import java.sql.Statement;
 public class TestMaker {
 	private Connection dataBaseConnection;
 	private ResultSet questionsAnswers;
-	private boolean hasNext;
+	private boolean hasQuestion;
 	public TestMaker(){
-		hasNext=false;
+		hasQuestion=false;
 		try {
-			dataBaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/testmaker?autoReconnect=true&useSSL=false","student","student");
+			dataBaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb?autoReconnect=true&useSSL=false","student","student");
 			Statement statement = dataBaseConnection.createStatement();
-			questionsAnswers = statement.executeQuery("SELECT * FROM questionsanswers");
+			questionsAnswers = statement.executeQuery("SELECT * FROM mydb.Question");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	public boolean nextQuestionAnswers(){
 		try {
-			hasNext=questionsAnswers.next();
+			if(questionsAnswers.isLast()){
+				hasQuestion=false;
+			}else{
+				hasQuestion=questionsAnswers.next();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			hasQuestion=false;
 		}
-		return hasNext;
+		return hasQuestion;
 	}
-	public String nextQuestion() throws SQLException{
-		if(!hasNext){
+	public boolean previousQuestionAnswers(){
+		try{
+			if(questionsAnswers.isFirst()){
+				hasQuestion=false;
+			}else{
+				hasQuestion=questionsAnswers.previous();
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+			hasQuestion=false;
+		}
+		return hasQuestion;
+	}
+	public String getQuestion() throws SQLException{
+		if(!hasQuestion){
 			throw new RuntimeException("ERROR. No more questions");
 		}
 		return questionsAnswers.getString("Question");
 	}
 	
-	public String nextAnswer1() throws SQLException{
-		if(!hasNext){
+	public String getAnswer1() throws SQLException{
+		if(!hasQuestion){
 			throw new RuntimeException("ERROR. No more answer1");
 		}
 		return questionsAnswers.getString("Answer1");
 	}
-	public String nextAnswer2() throws SQLException{
-		if(!hasNext){
+	public String getAnswer2() throws SQLException{
+		if(!hasQuestion){
 			throw new RuntimeException("ERROR. No more answer2");
 		}
 		return questionsAnswers.getString("Answer2");
 	}
-	public String nextAnswer3() throws SQLException{
-		if(!hasNext){
+	public String getAnswer3() throws SQLException{
+		if(!hasQuestion){
 			throw new RuntimeException("ERROR. No more answer3");
 		}
 		return questionsAnswers.getString("Answer3");
 	}
-	public String nextAnswer4() throws SQLException{
-		if(!hasNext){
+	public String getAnswer4() throws SQLException{
+		if(!hasQuestion){
 			throw new RuntimeException("ERROR. No more answer4");
 		}
 		return questionsAnswers.getString("Answer4");
 	}
 	
-	public int getRealAnswer() throws SQLException{
-		if(!hasNext){
+	public int getCorrectAnswer() throws SQLException{
+		if(!hasQuestion){
 			throw new RuntimeException("ERROR. No more answer4");
 		}
-		return questionsAnswers.getInt("RealAnswer");
+		return questionsAnswers.getInt("CorrectAnswer");
 	}
 	
 }
