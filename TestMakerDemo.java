@@ -19,11 +19,11 @@ public class TestMakerDemo {
         TestMakerView testMakerView = new TestMakerPanel1();
         TestMakerCtr testMakerCtr = new TestMakerCtr(testMakerView,testMaker);
         testMakerView.controller(testMakerCtr);
-        JFrame window = new JFrame("TestMaker");
+        JFrame window = new JFrame("Test Maker");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setContentPane((JPanel) testMakerView);
         window.pack();
-        window.setMinimumSize(new Dimension(300,300));
+        window.setMinimumSize(new Dimension(500,300));
         window.setVisible(true);
     }
 }
